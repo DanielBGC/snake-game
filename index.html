@@ -16,6 +16,8 @@
         let FPS;
         let tileSize;
 
+        let snake;
+
         function resizeWindow() {
             //largura total da tela
             WIDTH = window.innerWidth;
@@ -25,6 +27,9 @@
 
             canvas.width = WIDTH;
             canvas.height = HEIGHT;
+
+            //fator de escala para cada quadradinho
+            tileSize = Math.max( parseInt(WIDTH/60), parseInt(HEIGHT/60) );
         }
 
         //A função é chamada sempre que a tela for redimensionada
@@ -40,16 +45,39 @@
 
             FPS = 30;
 
+            newGame();
             run();
         };
         init()
+
+        function newGame() {
+            snake = new Snake();
+        }
+
+        function Snake() {
+            
+            //tamanho inicial com 3 quadradinhos
+            this.body = [ [10, 10], [10, 11], [10, 12] ];
+
+            //desenha a cobra
+            this.draw = function() {
+                ctx.fillStyle = "#000";
+
+                for(let i = 0; i < this.body.length; i++) {
+                    ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize, tileSize)
+                }
+            }
+        }
 
         function update() {
             
         }
         
         function draw() {
+            //limpa a tela inteira
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
+            snake.draw()
         }
 
         function run() {
