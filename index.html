@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+</head>
+<body>
+    <script>
+
+        let canvas;
+        let ctx;
+        let WIDTH;
+        let HEIGHT;
+        let FPS=30;
+
+        function init() {
+            canvas = document.createElement("canvas");
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+
+            document.body.appendChild(canvas);
+
+            ctx = canvas.getContext("2d");
+
+            run();
+        };
+        init()
+
+        function update() {
+            // console.log(1)
+        }
+        
+        function draw() {
+
+        }
+
+        function run() {
+            update();
+            draw();
+
+            setTimeout(run, 1000/FPS)
+            // requestAnimationFrame(run)
+        }
+
+    </script>
+</body>
+</html>
