@@ -4,31 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <script>
-
         let canvas;
         let ctx;
         let WIDTH;
         let HEIGHT;
-        let FPS=30;
+        let FPS;
+        let tileSize;
+
+        function resizeWindow() {
+            //largura total da tela
+            WIDTH = window.innerWidth;
+
+            //altura total da tela
+            HEIGHT = window.innerHeight;
+
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+        }
+
+        //A função é chamada sempre que a tela for redimensionada
+        window.addEventListener("resize", resizeWindow)
 
         function init() {
             canvas = document.createElement("canvas");
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
+            resizeWindow();
 
             document.body.appendChild(canvas);
 
             ctx = canvas.getContext("2d");
+
+            FPS = 30;
 
             run();
         };
         init()
 
         function update() {
-            // console.log(1)
+            
         }
         
         function draw() {
