@@ -234,6 +234,12 @@
                 //reinicia o jogo se a snake sair da tela
                 if( nextPos[0] >= Math.ceil(WIDTH/tileSize) || nextPos[0] < 0 || nextPos[1] >= Math.ceil(HEIGHT/tileSize) || nextPos[1] < 0)
                     newGame()
+
+                for(let i = 1; i < this.body.length; i++) {
+                    //verifica se o começo da cobra irá colidir com o resto do corpo
+                    if(this.body[i][0] == nextPos[0] && this.body[i][1] == nextPos[1])
+                        newGame()
+                }
                 
                 this.body.splice(0, 0, nextPos);
                 this.body.pop();
