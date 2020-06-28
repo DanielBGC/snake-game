@@ -15,6 +15,7 @@
         let tileSize;
 
         let snake;
+        let food;
         let playing;
         let playLabel;
 
@@ -122,6 +123,7 @@
             snake = new Snake();
             playLabel = new PlayLabel();
 
+            food = new Food();
             playing = false;
         }
 
@@ -167,7 +169,7 @@
             }
 
             this.update = function() {
-                let nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+                let nextPos = [ this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1] ];
 
                 //se o usuário não estiver jogando
                 if(playing == false) {
@@ -196,9 +198,29 @@
                     this.body.reverse();
                     nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
                 }
+
+                if(nextPos[1] == food.y/tileSize && nextPos[0] == food.x/tileSize) {
+                    food.update()
+                } 
                 
                 this.body.splice(0, 0, nextPos);
                 this.body.pop();
+            }
+        }
+
+        function Food() {
+            this.color = "#FF0000"
+            this.x = tileSize * parseInt(Math.random() * parseInt(WIDTH/tileSize) );
+            this.y = tileSize * parseInt(Math.random() * parseInt(HEIGHT/tileSize) );
+
+            this.draw = function() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, tileSize, tileSize)
+            }
+
+            this.update = function() {
+                this.x = tileSize * parseInt(Math.random() * parseInt(WIDTH/tileSize) );
+                this.y = tileSize * parseInt(Math.random() * parseInt(HEIGHT/tileSize) );
             }
         }
 
@@ -211,7 +233,9 @@
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
             snake.draw()
-            
+
+            food.draw()
+
             if(playing == false)
                 playLabel.draw()
         }
