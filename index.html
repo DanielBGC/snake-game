@@ -221,6 +221,10 @@
                 if(nextPos[1] == food.y/tileSize && nextPos[0] == food.x/tileSize) {
                     food.update()
                     points.update()
+
+                    //adiciona à ultima posição do array this.body
+                    // this.body.push([x,y])
+                    this.body.push([this.body[this.body.length-1][0] + 1, this.body[this.body.length-1][1] + 1 ])
                 } 
                 
                 this.body.splice(0, 0, nextPos);
@@ -254,11 +258,13 @@
 
             snake.draw()
 
-            food.draw()
             points.draw()
 
             if(playing == false)
                 playLabel.draw()
+
+            if(playing)
+                food.draw()
         }
 
         function run() {
