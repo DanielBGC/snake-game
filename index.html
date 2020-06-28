@@ -16,6 +16,7 @@
 
         let snake;
         let food;
+        let points;
         let playing;
         let playLabel;
 
@@ -49,7 +50,7 @@
             canvas.height = HEIGHT;
 
             //fator de escala para cada quadradinho
-            tileSize = Math.max( parseInt(WIDTH/60), parseInt(HEIGHT/60) );
+            tileSize = Math.max( parseInt(WIDTH/50), parseInt(HEIGHT/50) );
         }
 
         function touchStart(event) {
@@ -112,7 +113,7 @@
 
             ctx = canvas.getContext("2d");
 
-            FPS = 30;
+            FPS = 25;
 
             newGame();
             run();
@@ -124,7 +125,24 @@
             playLabel = new PlayLabel();
 
             food = new Food();
+            points = new Points();
             playing = false;
+        }
+
+        function Points() {
+            this.color = "#FFFFFF";
+            this.pontos = 0;
+            
+            this.draw = function() {
+                ctx.fillStyle = this.color;
+                ctx.font = tileSize * 2 + "px Arial";
+                ctx.fillText(this.pontos, tileSize, tileSize * 2)
+            }
+
+            this.update = function() {
+                this.pontos++;
+            }
+            
         }
 
         function PlayLabel() {
@@ -199,8 +217,10 @@
                     nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
                 }
 
+                //quando o usuário coletar a comida
                 if(nextPos[1] == food.y/tileSize && nextPos[0] == food.x/tileSize) {
                     food.update()
+                    points.update()
                 } 
                 
                 this.body.splice(0, 0, nextPos);
@@ -235,6 +255,7 @@
             snake.draw()
 
             food.draw()
+            points.draw()
 
             if(playing == false)
                 playLabel.draw()
