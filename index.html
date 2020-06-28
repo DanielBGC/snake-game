@@ -2,22 +2,22 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Snake</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <script>
-        let canvas;
-        let ctx;
-        let WIDTH;
-        let HEIGHT;
+        let canvas, ctx;
+        let WIDTH, HEIGHT;
         let FPS;
         let tileSize;
 
         let snake;
         let playing;
+
+        let globalTouch = [], offset = [];
 
         // let validMovement;
         
@@ -38,9 +38,47 @@
         //A função é chamada sempre que a tela for redimensionada
         window.addEventListener("resize", resizeWindow)
 
+        //A função é chamada quando o usuário tocar a tela
+        window.addEventListener("touchstart", touchStart);
+
+        //A função é chamada quando o usuário mover o dedo sobre a tela
+        window.addEventListener("touchmove", touchMove);
+
+        //A função é chamada quando o usuário remove o dedo da tela
+        window.addEventListener("touchend", touchEnd);
+
         //A função é chamada quando o usuário apertar alguma tecla
         window.addEventListener("keydown", keyDown)
 
+
+        function touchStart(event) {
+            event.preventDefault();
+
+            //salva somente o primeiro toque que o usuário fizer
+            let touch = event.touch[0];
+            globalTouch = [touch.pageX, touch.pageY];
+        }
+
+        function touchMove(event) {
+            let touch = event.touch[0];
+
+            //diferença entre o valor final e o valor inicial
+            offset = [touch.pageX - globalTouch[0], touch.pageY - globalTouch[1] ]
+        }
+
+        function touchEnd(event) {
+            if(Math.abs(offset[0]) > Math.abs(offset[1]) ) {
+                //move a snake na horizontal
+                snake.direction = [ offset[0] / Math.abs(offset[0]), 0 ]
+                playing = true;
+
+            }
+            else {
+                //move a snake na vertical
+                snake.direction = [ 0, offset[1] / Math.abs(offset[1]) ]
+                playing = true;
+            }
+        }
         
         function keyDown(event) {
             if(event.key === "ArrowUp" || event.key === 'w') {
@@ -133,7 +171,6 @@
                 
                 this.body.splice(0, 0, nextPos);
                 this.body.pop();
-
             }
         }
 
