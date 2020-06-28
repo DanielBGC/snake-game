@@ -19,6 +19,8 @@
         let snake;
         let playing;
 
+        // let validMovement;
+        
         function resizeWindow() {
             //largura total da tela
             WIDTH = window.innerWidth;
@@ -35,6 +37,29 @@
 
         //A função é chamada sempre que a tela for redimensionada
         window.addEventListener("resize", resizeWindow)
+
+        //A função é chamada quando o usuário apertar alguma tecla
+        window.addEventListener("keydown", keyDown)
+
+        
+        function keyDown(event) {
+            if(event.key === "ArrowUp" || event.key === 'w') {
+                snake.direction = [0, -1];
+                playing = true;
+            }
+            else if(event.key === "ArrowDown" || event.key === 's') {
+                snake.direction = [0, 1];
+                playing = true;
+            }
+            else if(event.key === "ArrowRight" || event.key === 'd') {
+                snake.direction = [1, 0];
+                playing = true;
+            }
+            else if(event.key === "ArrowLeft" || event.key === 'a') {
+                snake.direction = [-1, 0];
+                playing = true;
+            }
+        }
 
         function init() {
             canvas = document.createElement("canvas");
@@ -64,6 +89,7 @@
             this.body = [ [10, 10], [10, 11], [10, 12] ];
             this.direction = [0, -1];
 
+
             //desenha a cobra
             this.draw = function() {
                 //cor da cobra
@@ -77,7 +103,8 @@
             this.update = function() {
                 let nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
 
-                if(!playing) {
+                //se o usuário não estiver jogando
+                if(playing == false) {
                     //quando estiver indo para cima
                     if(this.direction[1] == -1  && nextPos[1] <= (HEIGHT * 0.1 / tileSize) ) {
                         this.direction = [1, 0]
@@ -99,9 +126,14 @@
                     }
                 }
 
+                if(nextPos[0] == this.body[1][0] && nextPos[1] == this.body[1][1]) {
+                    this.body.reverse();
+                    nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+                }
+                
+                this.body.splice(0, 0, nextPos);
                 this.body.pop();
 
-                this.body.splice(0, 0, nextPos);
             }
         }
 
