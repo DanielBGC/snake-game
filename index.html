@@ -55,12 +55,12 @@
             event.preventDefault();
 
             //salva somente o primeiro toque que o usuário fizer
-            let touch = event.touch[0];
+            let touch = event.touches[0];
             globalTouch = [touch.pageX, touch.pageY];
         }
 
         function touchMove(event) {
-            let touch = event.touch[0];
+            let touch = event.touches[0];
 
             //diferença entre o valor final e o valor inicial
             offset = [touch.pageX - globalTouch[0], touch.pageY - globalTouch[1] ]
@@ -71,7 +71,6 @@
                 //move a snake na horizontal
                 snake.direction = [ offset[0] / Math.abs(offset[0]), 0 ]
                 playing = true;
-
             }
             else {
                 //move a snake na vertical
