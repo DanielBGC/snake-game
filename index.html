@@ -22,7 +22,10 @@
 
         let globalTouch = [], offset = [];
         // let validMovement;
-        
+
+        window.addEventListener("beforeunload", function(event) {
+            event.preventDefault();
+        })
 
         //A função é chamada sempre que a tela for redimensionada
         window.addEventListener("resize", resizeWindow)
