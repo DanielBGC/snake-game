@@ -16,24 +16,11 @@
 
         let snake;
         let playing;
+        let playLabel;
 
         let globalTouch = [], offset = [];
-
         // let validMovement;
         
-        function resizeWindow() {
-            //largura total da tela
-            WIDTH = window.innerWidth;
-
-            //altura total da tela
-            HEIGHT = window.innerHeight;
-
-            canvas.width = WIDTH;
-            canvas.height = HEIGHT;
-
-            //fator de escala para cada quadradinho
-            tileSize = Math.max( parseInt(WIDTH/60), parseInt(HEIGHT/60) );
-        }
 
         //A função é chamada sempre que a tela for redimensionada
         window.addEventListener("resize", resizeWindow)
@@ -50,6 +37,19 @@
         //A função é chamada quando o usuário apertar alguma tecla
         window.addEventListener("keydown", keyDown)
 
+        function resizeWindow() {
+            //largura total da tela
+            WIDTH = window.innerWidth;
+
+            //altura total da tela
+            HEIGHT = window.innerHeight;
+
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+
+            //fator de escala para cada quadradinho
+            tileSize = Math.max( parseInt(WIDTH/60), parseInt(HEIGHT/60) );
+        }
 
         function touchStart(event) {
             event.preventDefault();
@@ -98,6 +98,11 @@
             }
         }
 
+        //identifica se o usuário está em um dispositivo móvel
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+        }
+
         function init() {
             canvas = document.createElement("canvas");
             resizeWindow();
@@ -115,8 +120,32 @@
 
         function newGame() {
             snake = new Snake();
+            playLabel = new PlayLabel();
 
             playing = false;
+        }
+
+        function PlayLabel() {
+            this.text;
+            this.color = "#5d8357";
+
+            this.messages = {
+                mobile: "Arraste o dedo na tela para jogar",
+                pc: "Pressione as setas ou WASD para jogar"
+            };
+
+            if(isMobileDevice()) {
+                this.text = this.messages["mobile"];
+            }
+            else {
+                this.text = this.messages["pc"];
+            }
+
+            this.draw = function() {
+                ctx.fillStyle = this.color;
+                ctx.font = tileSize * 2 + "px Arial";
+                ctx.fillText(this.text, WIDTH/2 - ctx.measureText(this.text).width / 2, HEIGHT/2)
+            }
         }
 
         //class Snake {}
@@ -182,6 +211,9 @@
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
             snake.draw()
+            
+            if(playing == false)
+                playLabel.draw()
         }
 
         function run() {
