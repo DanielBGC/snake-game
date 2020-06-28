@@ -17,6 +17,7 @@
         let tileSize;
 
         let snake;
+        let playing;
 
         function resizeWindow() {
             //largura total da tela
@@ -52,25 +53,60 @@
 
         function newGame() {
             snake = new Snake();
+
+            playing = false;
         }
 
+        //class Snake {}
         function Snake() {
             
             //tamanho inicial com 3 quadradinhos
             this.body = [ [10, 10], [10, 11], [10, 12] ];
+            this.direction = [0, -1];
 
             //desenha a cobra
             this.draw = function() {
+                //cor da cobra
                 ctx.fillStyle = "#000";
 
                 for(let i = 0; i < this.body.length; i++) {
                     ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize, tileSize)
                 }
             }
+
+            this.update = function() {
+                let nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+
+                if(!playing) {
+                    //quando estiver indo para cima
+                    if(this.direction[1] == -1  && nextPos[1] <= (HEIGHT * 0.1 / tileSize) ) {
+                        this.direction = [1, 0]
+                    }
+
+                    //quando estiver indo para a direita
+                    else if(this.direction[0] == 1  && nextPos[0] >= (WIDTH * 0.9 / tileSize) ) {
+                        this.direction = [0, 1]
+                    }
+
+                    //quando estiver indo para baixo
+                    else if(this.direction[1] == 1  && nextPos[1] >= (HEIGHT * 0.9 / tileSize) ) {
+                        this.direction = [-1, 0]
+                    }
+
+                    //quando estiver indo para a esquerda
+                    else if(this.direction[0] == -1  && nextPos[0] <= (WIDTH * 0.1 / tileSize) ) {
+                        this.direction = [0, -1]
+                    }
+                }
+
+                this.body.pop();
+
+                this.body.splice(0, 0, nextPos);
+            }
         }
 
         function update() {
-            
+            snake.update()
         }
         
         function draw() {
