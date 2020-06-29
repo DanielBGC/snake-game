@@ -1,6 +1,3 @@
-# snake-game
-Jogo snake para Android, iOS e PC, utilizando Javascript e HTML
-
 <h1 align="center">
     Snake Game
 </h1>
