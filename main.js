@@ -162,7 +162,6 @@ function PlayLabel() {
 
 //class Snake {}
 function Snake() {
-
     //tamanho inicial com 3 quadradinhos
     this.body = [[10, 10], [10, 11], [10, 12]];
     this.direction = [0, -1];
@@ -178,28 +177,28 @@ function Snake() {
     }
 
     this.update = function () {
-        let nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+        let nextPos = [this.body[0][0] + this.direction[0] , this.body[0][1] + this.direction[1] ];
 
         //se o usuário não estiver jogando
         if (playing == false) {
             //quando estiver indo para cima
-            if (this.direction[1] == -1 && nextPos[1] <= (HEIGHT * 0.1 / tileSize)) {
+            if (this.direction[1] < 0 && nextPos[1] <= (HEIGHT * 0.1 / tileSize)) {
                 this.direction = [1, 0]
             }
 
             //quando estiver indo para a direita
-            else if (this.direction[0] == 1 && nextPos[0] >= (WIDTH * 0.9 / tileSize)) {
+            else if (this.direction[0] > 0 && nextPos[0] >= (WIDTH * 0.9 / tileSize)) {
                 this.direction = [0, 1]
             }
 
             //quando estiver indo para baixo
-            else if (this.direction[1] == 1 && nextPos[1] >= (HEIGHT * 0.9 / tileSize)) {
+            else if (this.direction[1] > 0 && nextPos[1] >= (HEIGHT * 0.9 / tileSize)) {
                 this.direction = [-1, 0]
             }
 
             //quando estiver indo para a esquerda
-            else if (this.direction[0] == -1 && nextPos[0] <= (WIDTH * 0.1 / tileSize)) {
-                this.direction = [0, -1]
+            else if (this.direction[0] < 0 && nextPos[0] <= (WIDTH * 0.1 / tileSize)) {
+                this.direction = [0, -1];
             }
         }
 
