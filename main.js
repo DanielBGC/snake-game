@@ -204,8 +204,12 @@ function Snake() {
         }
 
         if (nextPos[0] == this.body[1][0] && nextPos[1] == this.body[1][1]) {
-            this.body.reverse();
-            nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+            // this.body.reverse();
+            // nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
+
+            //impede a snake de trocar o seu sentido instantaneamente
+            nextPos[0] = this.body[0][0] + this.direction[0] * -1;
+            nextPos[1] = this.body[0][1] + this.direction[1] * -1;
         }
 
         //quando o usuário coletar a comida
@@ -233,8 +237,8 @@ function Snake() {
         else if (nextPos[1] < 0)
             nextPos[1] = Math.ceil(HEIGHT / tileSize);
 
-        for (let i = 1; i < this.body.length; i++) {
-            //verifica se o começo da cobra irá colidir com o resto do corpo
+        for (let i = 3; i < this.body.length; i++) {
+            //verifica se o começo da cobra irá colidir com o resto do corpo (a partir do 4º bloco)
             if (this.body[i][0] == nextPos[0] && this.body[i][1] == nextPos[1])
                 newGame()
         }
