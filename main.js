@@ -105,7 +105,7 @@ function init() {
 
     ctx = canvas.getContext("2d");
 
-    FPS = 25;
+    FPS = 15;
 
     newGame();
     run();
@@ -113,6 +113,7 @@ function init() {
 init()
 
 function newGame() {
+    FPS = 15;
     snake = new Snake();
     playLabel = new PlayLabel();
 
@@ -211,6 +212,7 @@ function Snake() {
         if (nextPos[1] == food.y / tileSize && nextPos[0] == food.x / tileSize) {
             food.update()
             points.update()
+            FPS += 0.5;
 
             //adiciona à ultima posição do array this.body
             // this.body.push([x,y])
