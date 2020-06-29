@@ -46,14 +46,13 @@ function resizeWindow() {
 }
 
 function touchStart(event) {
-    event.preventDefault();
-
     //salva somente o primeiro toque que o usuário fizer
     let touch = event.touches[0];
     globalTouch = [touch.pageX, touch.pageY];
 }
 
 function touchMove(event) {
+    event.preventDefault();
     let touch = event.touches[0];
 
     //diferença entre o valor final e o valor inicial
