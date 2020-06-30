@@ -1,15 +1,18 @@
 let snake;
+let snake2;
 
 //class Snake {}
-function Snake() {
+function Snake(body, color) {
     //tamanho inicial com 3 quadradinhos
-    this.body = [[10, 10], [10, 11], [10, 12]];
+    this.body = body;
     this.direction = [0, -1];
+
+    this.points = 0;
 
     //desenha a cobra
     this.draw = function () {
         //cor da cobra
-        ctx.fillStyle = "#000";
+        ctx.fillStyle = color;
 
         for (let i = 0; i < this.body.length; i++) {
             ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize, tileSize)
@@ -54,7 +57,7 @@ function Snake() {
         //quando o usuário coletar a comida
         if (nextPos[1] == food.y / tileSize && nextPos[0] == food.x / tileSize) {
             food.update()
-            points.update()
+            this.points++;
             FPS += 0.5;
 
             //adiciona à ultima posição do array this.body

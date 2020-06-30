@@ -29,10 +29,6 @@ window.addEventListener("touchend", touchEnd);
 //A função é chamada quando o usuário apertar alguma tecla
 window.addEventListener("keydown", keyDown)
 
-function players() {
-    alert(1)
-}
-
 function resizeWindow() {
     //largura total da tela
     WIDTH = window.innerWidth;
@@ -75,27 +71,70 @@ function touchEnd(event) {
 }
 
 function keyDown(event) {
-    if (event.key === "ArrowUp" || event.key === 'w') {
-        snake.direction = [0, -1];
-        playing = true;
+    if(player == 1) {
+        if (event.key === "ArrowUp" || event.key === 'w') {
+            snake.direction = [0, -1];
+            playing = true;
+        }
+        else if (event.key === "ArrowDown" || event.key === 's') {
+            snake.direction = [0, 1];
+            playing = true;
+        }
+        else if (event.key === "ArrowRight" || event.key === 'd') {
+            snake.direction = [1, 0];
+            playing = true;
+        }
+        else if (event.key === "ArrowLeft" || event.key === 'a') {
+            snake.direction = [-1, 0];
+            playing = true;
+        }
     }
-    else if (event.key === "ArrowDown" || event.key === 's') {
-        snake.direction = [0, 1];
-        playing = true;
-    }
-    else if (event.key === "ArrowRight" || event.key === 'd') {
-        snake.direction = [1, 0];
-        playing = true;
-    }
-    else if (event.key === "ArrowLeft" || event.key === 'a') {
-        snake.direction = [-1, 0];
-        playing = true;
+
+    if(player == 2) {
+        if (event.key === "ArrowUp") {
+            snake.direction = [0, -1];
+            playing = true;
+        }
+        else if (event.key === "ArrowDown") {
+            snake.direction = [0, 1];
+            playing = true;
+        }
+        else if (event.key === "ArrowRight") {
+            snake.direction = [1, 0];
+            playing = true;
+        }
+        else if (event.key === "ArrowLeft") {
+            snake.direction = [-1, 0];
+            playing = true;
+        }
+
+        if (event.key === "w") {
+            snake2.direction = [0, -1];
+            playing = true;
+        }
+        else if (event.key === "s") {
+            snake2.direction = [0, 1];
+            playing = true;
+        }
+        else if (event.key === "d") {
+            snake2.direction = [1, 0];
+            playing = true;
+        }
+        else if (event.key === "a") {
+            snake2.direction = [-1, 0];
+            playing = true;
+        }
     }
 }
 
 //identifica se o usuário está em um dispositivo móvel
 function isMobileDevice() {
     return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+}
+
+function players(num) {
+    player = num;
+    return player;
 }
 
 function init() {
@@ -126,18 +165,23 @@ canvas.onclick = function(event) {
     //se o clique for no botao 1
     if(pos.x > button_1.x && pos.x < (button_1.x + button_1.width) && pos.y > button_1.y && pos.y < (button_1.y + button_1.height) ) {
         console.log("botao 1")
-        players()
+        players(1)
+        newGame()
     }
     //se o clique for no botao 2
     else if(pos.x > button_2.x && pos.x < (button_2.x + button_2.width) && pos.y > button_2.y && pos.y < (button_2.y + button_2.height) ) {
         console.log("botao 2")
         players(2)
+        newGame()
     }
 }
 
 function newGame() {
     FPS = 15;
-    snake = new Snake();
+
+    snake = new Snake([[10, 10], [10, 11], [10, 12]], "#000");
+    
+    snake2 = new Snake([[20, 10], [20, 11], [20, 12]], "blue");
 
     playLabel = new PlayLabel();
 
@@ -151,6 +195,9 @@ function newGame() {
 
 function update() {
     snake.update()
+
+    if(player == 2)
+        snake2.update()
 }
 
 function draw() {
@@ -158,6 +205,9 @@ function draw() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
     snake.draw()
+    
+    if(player == 2)
+        snake2.draw()
     
     if (playing == false) {
         playLabel.draw()
