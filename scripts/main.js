@@ -5,6 +5,8 @@ let tileSize;
 
 let playing;
 
+let player;
+
 let globalTouch = [], offset = [];
 // let validMovement;
 
@@ -26,6 +28,10 @@ window.addEventListener("touchend", touchEnd);
 
 //A função é chamada quando o usuário apertar alguma tecla
 window.addEventListener("keydown", keyDown)
+
+function players() {
+    alert(1)
+}
 
 function resizeWindow() {
     //largura total da tela
@@ -107,19 +113,6 @@ function init() {
 };
 init()
 
-function newGame() {
-    FPS = 15;
-    snake = new Snake();
-    playLabel = new PlayLabel();
-
-    button_1 = new Button(5, 1);
-    button_2 = new Button(3, 2);
-
-    food = new Food();
-    points = new Points();
-    playing = false;
-}
-
 //A função é chamada sempre que o usuário clicar na tela
 canvas.onclick = function(event) {
     var rectNav = canvas.getBoundingClientRect();
@@ -133,11 +126,27 @@ canvas.onclick = function(event) {
     //se o clique for no botao 1
     if(pos.x > button_1.x && pos.x < (button_1.x + button_1.width) && pos.y > button_1.y && pos.y < (button_1.y + button_1.height) ) {
         console.log("botao 1")
+        players()
     }
     //se o clique for no botao 2
     else if(pos.x > button_2.x && pos.x < (button_2.x + button_2.width) && pos.y > button_2.y && pos.y < (button_2.y + button_2.height) ) {
         console.log("botao 2")
+        players(2)
     }
+}
+
+function newGame() {
+    FPS = 15;
+    snake = new Snake();
+
+    playLabel = new PlayLabel();
+
+    button_1 = new Button(5, 1);
+    button_2 = new Button(3, 2);
+
+    food = new Food();
+    points = new Points();
+    playing = false;
 }
 
 function update() {
@@ -152,8 +161,12 @@ function draw() {
     
     if (playing == false) {
         playLabel.draw()
-        button_1.draw()
-        button_2.draw()
+
+        //exibe os botões apenas se o usuário estiver em um computador
+        if(!isMobileDevice()) {
+            button_1.draw()
+            button_2.draw()
+        }
     }
     
     if (playing) {
