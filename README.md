@@ -1,6 +1,10 @@
 <h1 align="center">
     Snake Game
 </h1>
+
+<p align="center">
+    <img src="https://github.com/DanielBGC/snake-game/blob/master/game-preview.gif">
+</p>
    
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
