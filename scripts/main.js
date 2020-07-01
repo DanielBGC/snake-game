@@ -164,13 +164,11 @@ canvas.onclick = function(event) {
 
     //se o clique for no botao 1
     if(pos.x > button_1.x && pos.x < (button_1.x + button_1.width) && pos.y > button_1.y && pos.y < (button_1.y + button_1.height) ) {
-        console.log("botao 1")
         players(1)
         newGame()
     }
     //se o clique for no botao 2
     else if(pos.x > button_2.x && pos.x < (button_2.x + button_2.width) && pos.y > button_2.y && pos.y < (button_2.y + button_2.height) ) {
-        console.log("botao 2")
         players(2)
         newGame()
     }
