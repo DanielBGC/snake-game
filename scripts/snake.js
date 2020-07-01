@@ -15,7 +15,7 @@ function Snake(body, color) {
         ctx.fillStyle = color;
 
         for (let i = 0; i < this.body.length; i++) {
-            ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize, tileSize)
+            ctx.fillRect(this.body[i][0] * tileSize, this.body[i][1] * tileSize, tileSize-1, tileSize-1)
         }
     }
 
