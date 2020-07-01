@@ -1,0 +1,29 @@
+let gameOver;
+let isGameOver = false;
+
+function GameOver() {
+    this.messages = {
+        gameover: "GAME OVER",
+        click: "Clique na tela para recomeçar",
+        
+        player1: "O jogador 1 ganhou!",
+        player2: "O jogador 2 ganhou!"
+    }
+    
+    this.draw = function(winner) {
+        ctx.fillStyle = "#5d8357";
+        ctx.font = tileSize * 2 + "px Arial";
+        
+        if(player == 1) {
+            ctx.fillText(this.messages["gameover"], WIDTH / 2 - ctx.measureText(this.messages["gameover"]).width / 2, HEIGHT / 2)   
+            ctx.fillText(this.messages["click"], WIDTH / 2 - ctx.measureText(this.messages["click"]).width / 2, HEIGHT / 5 * 3)   
+        }
+
+        if(player == 2) {
+            ctx.fillText(this.messages[winner], WIDTH / 2 - ctx.measureText(this.messages[winner]).width / 2, HEIGHT / 2)   
+            ctx.fillText(this.messages["click"], WIDTH / 2 - ctx.measureText(this.messages["click"]).width / 2, HEIGHT / 5 * 3)   
+        }
+
+    }
+
+}

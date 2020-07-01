@@ -71,7 +71,7 @@ function touchEnd(event) {
 }
 
 function keyDown(event) {
-    if(player == 1) {
+    if(player == 1 && !isGameOver) {
         if (event.key === "ArrowUp" || event.key === 'w') {
             snake.direction = [0, -1];
             playing = true;
@@ -90,7 +90,7 @@ function keyDown(event) {
         }
     }
 
-    if(player == 2) {
+    if(player == 2 && !isGameOver) {
         if (event.key === "ArrowUp") {
             snake.direction = [0, -1];
             playing = true;
@@ -188,6 +188,10 @@ function newGame() {
 
     food = new Food();
     points = new Points();
+
+    gameOver = new GameOver();
+    
+    isGameOver = false;
     playing = false;
 }
 
@@ -220,6 +224,11 @@ function draw() {
     if (playing) {
         food.draw()
         points.draw()
+    }
+
+    if(isGameOver) {
+        gameOver.draw()
+        document.addEventListener('click', newGame);
     }
 }
 

@@ -81,8 +81,12 @@ function Snake(body, color) {
 
         for (let i = 3; i < this.body.length; i++) {
             //verifica se o começo da cobra irá colidir com o resto do corpo (a partir do 4º bloco)
-            if (this.body[i][0] == nextPos[0] && this.body[i][1] == nextPos[1])
-                newGame()
+            if (this.body[i][0] == nextPos[0] && this.body[i][1] == nextPos[1]) {
+                this.direction[0] = 0;
+                this.direction[1] = 0;
+                
+                isGameOver = true;
+            }
         }
 
         this.body.splice(0, 0, nextPos);
