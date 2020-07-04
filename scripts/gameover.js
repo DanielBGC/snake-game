@@ -1,5 +1,6 @@
 let gameOver;
 let isGameOver = false;
+let winner;
 
 function GameOver() {
     this.messages = {
@@ -10,7 +11,7 @@ function GameOver() {
         player2: "O jogador 2 ganhou!"
     }
     
-    this.draw = function(winner) {
+    this.draw = function() {
         ctx.fillStyle = "#5d8357";
         ctx.font = tileSize * 2 + "px Arial";
     

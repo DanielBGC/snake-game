@@ -6,6 +6,7 @@ function Snake(body, color) {
     //tamanho inicial com 3 quadradinhos
     this.body = body;
     this.direction = [0, -1];
+    this.nextPos = [];
 
     this.points = 0;
 
@@ -20,42 +21,42 @@ function Snake(body, color) {
     }
 
     this.update = function () {
-        let nextPos = [this.body[0][0] + this.direction[0] , this.body[0][1] + this.direction[1] ];
+        this.nextPos = [this.body[0][0] + this.direction[0] , this.body[0][1] + this.direction[1] ];
 
         //se o usuário não estiver jogando
         if (playing == false) {
             //quando estiver indo para cima
-            if (this.direction[1] < 0 && nextPos[1] <= (HEIGHT * 0.1 / tileSize)) {
+            if (this.direction[1] < 0 && this.nextPos[1] <= (HEIGHT * 0.1 / tileSize)) {
                 this.direction = [1, 0]
             }
 
             //quando estiver indo para a direita
-            else if (this.direction[0] > 0 && nextPos[0] >= (WIDTH * 0.9 / tileSize)) {
+            else if (this.direction[0] > 0 && this.nextPos[0] >= (WIDTH * 0.9 / tileSize)) {
                 this.direction = [0, 1]
             }
 
             //quando estiver indo para baixo
-            else if (this.direction[1] > 0 && nextPos[1] >= (HEIGHT * 0.9 / tileSize)) {
+            else if (this.direction[1] > 0 && this.nextPos[1] >= (HEIGHT * 0.9 / tileSize)) {
                 this.direction = [-1, 0]
             }
 
             //quando estiver indo para a esquerda
-            else if (this.direction[0] < 0 && nextPos[0] <= (WIDTH * 0.1 / tileSize)) {
+            else if (this.direction[0] < 0 && this.nextPos[0] <= (WIDTH * 0.1 / tileSize)) {
                 this.direction = [0, -1];
             }
         }
 
-        if (nextPos[0] == this.body[1][0] && nextPos[1] == this.body[1][1]) {
+        if (this.nextPos[0] == this.body[1][0] && this.nextPos[1] == this.body[1][1]) {
             // this.body.reverse();
             // nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
 
             //impede a snake de trocar o seu sentido instantaneamente
-            nextPos[0] = this.body[0][0] + this.direction[0] * -1;
-            nextPos[1] = this.body[0][1] + this.direction[1] * -1;
+            this.nextPos[0] = this.body[0][0] + this.direction[0] * -1;
+            this.nextPos[1] = this.body[0][1] + this.direction[1] * -1;
         }
 
         //quando o usuário coletar a comida
-        if (nextPos[1] == food.y / tileSize && nextPos[0] == food.x / tileSize) {
+        if (this.nextPos[1] == food.y / tileSize && this.nextPos[0] == food.x / tileSize) {
             food.update()
             this.points++;
             FPS += 0.5;
@@ -69,27 +70,49 @@ function Snake(body, color) {
         // if( nextPos[0] >= Math.ceil(WIDTH/tileSize) || nextPos[0] < 0 || nextPos[1] >= Math.ceil(HEIGHT/tileSize) || nextPos[1] < 0)
         //     newGame()
 
-        if (nextPos[0] >= Math.ceil(WIDTH / tileSize))
-            nextPos[0] = 0;
-        else if (nextPos[0] < 0)
-            nextPos[0] = Math.ceil(WIDTH / tileSize);
+        if (this.nextPos[0] >= Math.ceil(WIDTH / tileSize))
+            this.nextPos[0] = 0;
+        else if (this.nextPos[0] < 0)
+            this.nextPos[0] = Math.ceil(WIDTH / tileSize);
 
-        if (nextPos[1] >= Math.ceil(HEIGHT / tileSize))
-            nextPos[1] = 0;
-        else if (nextPos[1] < 0)
-            nextPos[1] = Math.ceil(HEIGHT / tileSize);
+        if (this.nextPos[1] >= Math.ceil(HEIGHT / tileSize))
+            this.nextPos[1] = 0;
+        else if (this.nextPos[1] < 0)
+            this.nextPos[1] = Math.ceil(HEIGHT / tileSize);
 
         for (let i = 3; i < this.body.length; i++) {
             //verifica se o começo da cobra irá colidir com o resto do corpo (a partir do 4º bloco)
-            if (this.body[i][0] == nextPos[0] && this.body[i][1] == nextPos[1]) {
+            if (this.body[i][0] == this.nextPos[0] && this.body[i][1] == this.nextPos[1]) {
                 this.direction[0] = 0;
                 this.direction[1] = 0;
                 
                 isGameOver = true;
             }
         }
+        
+        snake.body.forEach(element => {
+            snake2.body.forEach(element2 => {
+                if(snake.nextPos[0] == element2[0] && snake.nextPos[1] == element2[1]) {
+                    snake.direction[0] = 0;
+                    snake.direction[1] = 0;
 
-        this.body.splice(0, 0, nextPos);
+                    isGameOver = true;
+                    winner = "player2"
+                }
+ 
+                if(snake2.nextPos[0] == element[0] && snake2.nextPos[1] == element[1]) {
+                    snake2.direction[0] = 0;
+                    snake2.direction[1] = 0;
+
+                    isGameOver = true;
+                    winner = "player1"
+                }
+            })
+        });
+
+       
+
+        this.body.splice(0, 0, this.nextPos);
         this.body.pop();
     }
 }
