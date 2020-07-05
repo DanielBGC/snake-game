@@ -7,8 +7,7 @@ let playing;
 
 let player;
 
-let globalTouch = [], offset = [];
-// let validMovement;
+let globalTouch = [], offset = [], touch_end = [];
 
 window.addEventListener("beforeunload", function (event) {
     event.preventDefault();
@@ -46,26 +45,46 @@ function resizeWindow() {
 function touchStart(event) {
     //salva somente o primeiro toque que o usuário fizer
     let touch = event.touches[0];
+
     globalTouch = [touch.pageX, touch.pageY];
 }
 
 function touchMove(event) {
     event.preventDefault();
-    let touch = event.touches[0];
+    touch_end = event.touches[0];
 
     //diferença entre o valor final e o valor inicial
-    offset = [touch.pageX - globalTouch[0], touch.pageY - globalTouch[1]]
+    offset = [touch_end.pageX - globalTouch[0], touch_end.pageY - globalTouch[1]]
 }
 
-function touchEnd(event) {
-    if (Math.abs(offset[0]) > Math.abs(offset[1])) {
-        //move a snake na horizontal
-        snake.direction = [offset[0] / Math.abs(offset[0]), 0]
+function touchEnd() {
+    //Move horizontalmente
+    if(  Math.abs(touch_end.pageX - globalTouch[0]) > Math.abs(touch_end.pageY - globalTouch[1]) ) {
+        //move pra direita
+        if(touch_end.pageX > globalTouch[0]) {
+            if(snake.direction[0] != -1)
+                snake.direction = [1, 0]
+        }
+
+        //move pra esquerda
+        else if(touch_end.pageX < globalTouch[0]) {
+            if(snake.direction[0] != 1)
+                snake.direction = [-1, 0]
+        }
+        
         playing = true;
     }
+    //Move Verticalmente
     else {
-        //move a snake na vertical
-        snake.direction = [0, offset[1] / Math.abs(offset[1])]
+        if(touch_end.pageY > globalTouch[1]) {
+            if(snake.direction[1] != -1)
+                snake.direction = [0, 1]
+        }
+        else if(touch_end.pageY < globalTouch[1]) {
+            if(snake.direction[1] != 1)
+                snake.direction = [0, -1]
+        }
+
         playing = true;
     }
 }
