@@ -46,15 +46,6 @@ function Snake(body, color) {
             }
         }
 
-        if (this.nextPos[0] == this.body[1][0] && this.nextPos[1] == this.body[1][1]) {
-            // this.body.reverse();
-            // nextPos = [this.body[0][0] + this.direction[0], this.body[0][1] + this.direction[1]];
-
-            //impede a snake de trocar o seu sentido instantaneamente
-            this.nextPos[0] = this.body[0][0] + this.direction[0] * -1;
-            this.nextPos[1] = this.body[0][1] + this.direction[1] * -1;
-        }
-
         //quando o usuário coletar a comida
         if (this.nextPos[1] == food.y / tileSize && this.nextPos[0] == food.x / tileSize) {
             food.update()
@@ -92,7 +83,7 @@ function Snake(body, color) {
         
         snake.body.forEach(element => {
             snake2.body.forEach(element2 => {
-                if(snake.nextPos[0] == element2[0] && snake.nextPos[1] == element2[1]) {
+                if(snake.nextPos[0] == element2[0] && snake.nextPos[1] == element2[1] && player == 2) {
                     snake.direction[0] = 0;
                     snake.direction[1] = 0;
 
@@ -100,7 +91,7 @@ function Snake(body, color) {
                     winner = "player2"
                 }
  
-                if(snake2.nextPos[0] == element[0] && snake2.nextPos[1] == element[1]) {
+                if(snake2.nextPos[0] == element[0] && snake2.nextPos[1] == element[1] && player == 2) {
                     snake2.direction[0] = 0;
                     snake2.direction[1] = 0;
 

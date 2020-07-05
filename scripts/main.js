@@ -73,55 +73,79 @@ function touchEnd(event) {
 function keyDown(event) {
     if(player == 1 && !isGameOver) {
         if (event.key === "ArrowUp" || event.key === 'w') {
-            snake.direction = [0, -1];
+            if(snake.direction[1] != 1)
+                snake.direction = [0, -1];
+
             playing = true;
         }
         else if (event.key === "ArrowDown" || event.key === 's') {
-            snake.direction = [0, 1];
+            if(snake.direction[1] != -1)
+                snake.direction = [0, 1];
+
             playing = true;
         }
         else if (event.key === "ArrowRight" || event.key === 'd') {
-            snake.direction = [1, 0];
+            if(snake.direction[0] != -1)
+                snake.direction = [1, 0];
+
             playing = true;
         }
         else if (event.key === "ArrowLeft" || event.key === 'a') {
-            snake.direction = [-1, 0];
+            if(snake.direction[0] != 1)
+                snake.direction = [-1, 0];
+
             playing = true;
         }
     }
 
     if(player == 2 && !isGameOver) {
         if (event.key === "ArrowUp") {
-            snake.direction = [0, -1];
+            if(snake.direction[1] != 1)
+                snake.direction = [0, -1];
+
             playing = true;
         }
         else if (event.key === "ArrowDown") {
-            snake.direction = [0, 1];
+            if(snake.direction[1] != -1)
+                snake.direction = [0, 1];
+
             playing = true;
         }
         else if (event.key === "ArrowRight") {
-            snake.direction = [1, 0];
+            if(snake.direction[0] != -1)
+                snake.direction = [1, 0];
+
             playing = true;
         }
         else if (event.key === "ArrowLeft") {
-            snake.direction = [-1, 0];
+            if(snake.direction[0] != 1)
+                snake.direction = [-1, 0];
+
             playing = true;
         }
 
         if (event.key === "w") {
-            snake2.direction = [0, -1];
+            if(snake2.direction[1] != 1)
+                snake2.direction = [0, -1];
+
             playing = true;
         }
         else if (event.key === "s") {
-            snake2.direction = [0, 1];
+            if(snake2.direction[1] != -1)
+                snake2.direction = [0, 1];
+
             playing = true;
         }
         else if (event.key === "d") {
-            snake2.direction = [1, 0];
+            if(snake2.direction[0] != -1)
+                snake2.direction = [1, 0];
+
             playing = true;
         }
         else if (event.key === "a") {
-            snake2.direction = [-1, 0];
+            if(snake2.direction[0] != 1)
+                snake2.direction = [-1, 0];
+
             playing = true;
         }
     }
