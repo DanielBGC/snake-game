@@ -76,10 +76,12 @@ function touchEnd() {
     }
     //Move Verticalmente
     else {
+        //move pra baixo
         if(touch_end.pageY > globalTouch[1]) {
             if(snake.direction[1] != -1)
                 snake.direction = [0, 1]
         }
+        //move pra cima
         else if(touch_end.pageY < globalTouch[1]) {
             if(snake.direction[1] != 1)
                 snake.direction = [0, -1]
